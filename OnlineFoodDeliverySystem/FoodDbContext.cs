@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OnlineFoodDeliverySystem;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem
 {
@@ -21,6 +22,7 @@ namespace OnlineFoodDeliverySystem
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Customer> Customers { get; set; }
-
+        public DbSet<Delivery> Deliveries { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }

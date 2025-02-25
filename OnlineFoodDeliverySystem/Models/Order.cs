@@ -10,6 +10,11 @@ namespace OnlineFoodDeliverySystem
         public int RestaurantID { get; set; }
         public string? Status { get; set; }
         public double TotalAmount { get; set; }
+        public Customer Customer { get; set; }
+        public MenuItem MenuItem { get; set; }
+
+        //public ICollection<Order> Orders { get; set; }
+
 
     }
 }
