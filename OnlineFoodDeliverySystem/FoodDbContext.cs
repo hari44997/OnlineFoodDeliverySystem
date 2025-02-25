@@ -4,9 +4,9 @@ using OnlineFoodDeliverySystem;
 
 namespace OnlineFoodDeliverySystem
 {
-    public class MenuItemDbContext : DbContext
+    public class FoodDbContext : DbContext
     {
-        public MenuItemDbContext(DbContextOptions<MenuItemDbContext> options) : base(options)
+        public FoodDbContext(DbContextOptions<FoodDbContext> options) : base(options)
         {
         }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

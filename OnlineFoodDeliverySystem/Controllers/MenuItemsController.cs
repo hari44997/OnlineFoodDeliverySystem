@@ -8,8 +8,8 @@ namespace OnlineFoodDeliverySystem.Controllers
     [ApiController]
     public class MenuItemsController : ControllerBase
     {
-        private readonly MenuItemDbContext _context;
-        public MenuItemsController(MenuItemDbContext context) 
+        private readonly FoodDbContext _context;
+        public MenuItemsController(FoodDbContext context) 
         {
             this._context = context;
         }
