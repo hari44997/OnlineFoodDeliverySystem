@@ -19,8 +19,8 @@ namespace OnlineFoodDeliverySystem
         
         
         public DbSet<MenuItem> MenuItems { get; set; }
-        public DbSet<Order> orders { get; set; }
-        public DbSet<Customer> customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
     }
 }
