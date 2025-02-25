@@ -10,7 +10,7 @@ using OnlineFoodDeliverySystem;
 
 namespace OnlineFoodDeliverySystem.Migrations
 {
-    [DbContext(typeof(MenuItemDbContext))]
+    [DbContext(typeof(FoodDbContext))]
     [Migration("20250221062558_InitialCreate")]
     partial class InitialCreate
     {

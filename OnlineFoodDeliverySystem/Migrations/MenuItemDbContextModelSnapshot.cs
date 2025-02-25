@@ -9,7 +9,7 @@ using OnlineFoodDeliverySystem;
 
 namespace OnlineFoodDeliverySystem.Migrations
 {
-    [DbContext(typeof(MenuItemDbContext))]
+    [DbContext(typeof(FoodDbContext))]
     partial class MenuItemDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
