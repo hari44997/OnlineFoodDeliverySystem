@@ -30,7 +30,10 @@ namespace OnlineFoodDeliverySystem
         {
             //Customer-Order Relationship
             modelBuilder.Entity<Order>()
-                .HasOne
+                .HasOne(o => o.Customer)
+                .WithMany(c => c.Orders)
+                .HasForeignKey(o => o.CustomerID)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
 
