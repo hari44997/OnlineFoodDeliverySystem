@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem
 {
@@ -10,6 +11,7 @@ namespace OnlineFoodDeliverySystem
         public string? Description { get; set; }
         public int Price { get; set; }
         public int RestaruntID {  get; set; }
-        public Order Order { get; set; }
+        public Restaurant Restaurant{ get; set; }
+        public ICollection<Order>  Orders { get; set; }
     }
 }

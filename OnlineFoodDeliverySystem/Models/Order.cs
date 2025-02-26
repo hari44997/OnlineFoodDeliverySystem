@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem
 {
@@ -11,9 +12,14 @@ namespace OnlineFoodDeliverySystem
         public string? Status { get; set; }
         public double TotalAmount { get; set; }
         public Customer Customer { get; set; }
+        public int ItemID {  get; set; }
+        //public MenuItem MenuItem { get; set; }
+        public ICollection<Payment>Payments { get; set; }
+        public Restaurant Restaurant { get; set; }
         public MenuItem MenuItem { get; set; }
+        
 
-        //public ICollection<Order> Orders { get; set; }
+        
 
 
     }

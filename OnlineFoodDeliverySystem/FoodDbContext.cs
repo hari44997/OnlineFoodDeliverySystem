@@ -24,5 +24,17 @@ namespace OnlineFoodDeliverySystem
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Agent> Agents { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Customer-Order Relationship
+            modelBuilder.Entity<Order>()
+                .HasOne
+
+        }
+
+
     }
+
 }

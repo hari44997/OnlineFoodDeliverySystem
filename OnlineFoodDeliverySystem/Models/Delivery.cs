@@ -13,7 +13,7 @@ namespace OnlineFoodDeliverySystem.Models
         public TimeOnly EstimatedTimeOfArrival {  get; set; }
         public Order Order { get; set; }
 
-        //public ICollection<Order> Orders { get; set; }
+        public Agent Agent { get; set; }
         
     }
 }
