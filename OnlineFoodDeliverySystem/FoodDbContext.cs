@@ -41,11 +41,9 @@ namespace OnlineFoodDeliverySystem
                 .WithOne(r => r.Restaurant)
                 .HasForeignKey(m => m.RestaruntID)
                 .HasPrincipalKey(r => r.RestaurantID);
-            //Order and payment
-            modelBuilder.Entity<Order>()
-                .HasOne(p => p.Payments)
-                .WithOne(o => o.Order)
-                .Has()
+
+
+    
 
            
 
