@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OnlineFoodDeliverySystem;
 using OnlineFoodDeliverySystem.Models;
@@ -16,7 +17,7 @@ namespace OnlineFoodDeliverySystem
                 IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
                 string connectionString = configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(connectionString);
-            }
+            }   
         
         
         public DbSet<MenuItem> MenuItems { get; set; }
@@ -29,8 +30,28 @@ namespace OnlineFoodDeliverySystem
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Customer-Order Relationship
+            modelBuilder.Entity<Customer>()
+                .HasMany(o => o.Orders)
+                .WithOne(c => c.Customer)
+                .HasForeignKey(o => o.CustomerID);
+
+            //Restaurant and MenuItem
+            modelBuilder.Entity<Restaurant>()
+                .HasMany(m => m.MenuItems)
+                .WithOne(r => r.Restaurant)
+                .HasForeignKey(m => m.RestaruntID)
+                .HasPrincipalKey(r => r.RestaurantID);
+            //Order and payment
             modelBuilder.Entity<Order>()
-                .HasOne
+                .HasOne(p => p.Payments)
+                .WithOne(o => o.Order)
+                .Has()
+
+           
+
+
+
+
 
         }
 

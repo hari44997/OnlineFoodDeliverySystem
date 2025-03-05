@@ -17,6 +17,7 @@ namespace OnlineFoodDeliverySystem
         public ICollection<Payment>Payments { get; set; }
         public Restaurant Restaurant { get; set; }
         public MenuItem MenuItem { get; set; }
+        public ICollection<Delivery> Deliveries { get; set; }
         
 
         
