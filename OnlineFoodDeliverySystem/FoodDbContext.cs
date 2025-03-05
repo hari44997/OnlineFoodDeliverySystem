@@ -28,12 +28,6 @@ namespace OnlineFoodDeliverySystem
         public DbSet<Agent> Agents { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Customer-Order Relationship
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Customer)
-                .WithMany(c => c.Orders)
-                .HasForeignKey(o => o.CustomerID)
-                .OnDelete(DeleteBehavior.NoAction);
 
         }
 
