@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineFoodDeliverySystem;
+using OnlineFoodDeliverySystem.Data;
 
 namespace OnlineFoodDeliverySystem.Controllers
 {
@@ -8,7 +8,7 @@ namespace OnlineFoodDeliverySystem.Controllers
     [ApiController]
     public class MenuItemsController : ControllerBase
     {
-        private readonly FoodDbContext _context;
+       /* private readonly FoodDbContext _context;
         public MenuItemsController(FoodDbContext context) 
         {
             this._context = context;
@@ -41,7 +41,7 @@ namespace OnlineFoodDeliverySystem.Controllers
                 _context.SaveChanges();
             }
             return menuItem;
-        }
+        }*/
     }
             
 }

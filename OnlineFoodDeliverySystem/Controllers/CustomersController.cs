@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineFoodDeliverySystem.Data;
 
 namespace OnlineFoodDeliverySystem.Controllers
 {
@@ -20,5 +21,6 @@ namespace OnlineFoodDeliverySystem.Controllers
             _context.Customers.Add(customer);
             _context.SaveChanges();
         }
+
     }
 }

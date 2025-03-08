@@ -11,7 +11,7 @@ namespace OnlineFoodDeliverySystem.Models
         public string status { get; set; }
         public decimal amount { get; set; }
 
-        public virtual Order Order { get; set; }
+        public Order Order { get; set; }
 
     }
 }

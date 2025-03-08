@@ -10,7 +10,7 @@ namespace OnlineFoodDeliverySystem.Models
         public int OrderID {  get; set; }
         public int AgentID { get; set; }
         public string Status { get; set; } //In Progress,Delivered
-        public TimeOnly EstimatedTimeOfArrival {  get; set; }
+        public DateTime EstimatedTimeOfArrival {  get; set; }
         public Order Order { get; set; }
 
         public Agent Agent { get; set; }
