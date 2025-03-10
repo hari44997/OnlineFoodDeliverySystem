@@ -12,21 +12,6 @@ namespace OnlineFoodDeliverySystem.Repository
             _context = context;
         }
 
-        public bool AcceptedOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int AddOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeliveredOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Order> GetAllOrders()
         {
             return _context.Orders.ToList();
@@ -37,14 +22,17 @@ namespace OnlineFoodDeliverySystem.Repository
             return _context.Orders.Find(id);
         }
 
-        public bool PreparingOrder(Order order)
+        public void AddOrder(Order order)
         {
-            throw new NotImplementedException();
+            _context.Orders.Add(order);
+            _context.SaveChanges();
         }
 
-        public bool ProcessOrder(Order order)
+        public int UpdateOrderStatus(int id, string status)
         {
-            throw new NotImplementedException();
+            var UpdateStatus = _context.Orders.FirstOrDefault(o => o.OrderID == id);
+            UpdateStatus.Status = status;
+            return _context.SaveChanges();
         }
     }
 }
