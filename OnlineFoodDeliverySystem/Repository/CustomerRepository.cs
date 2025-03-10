@@ -43,15 +43,6 @@ namespace OnlineFoodDeliverySystem.Repository
             
         }
 
-        //int ICustomerRepository.AddCustomer(Customer customer)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //int ICustomerRepository.DeleteCustomer(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         
     }

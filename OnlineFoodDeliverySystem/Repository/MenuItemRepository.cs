@@ -29,23 +29,23 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public int UpdateItemPrice(int id, double newPrice)
         {
-            MenuItem MenuItemPriceUpdate = _context.MenuItems.FirstOrDefault(m =>  m.ItemID == id);
-            if(MenuItemPriceUpdate != null)
-            {
-                MenuItemPriceUpdate.Price = newPrice;
-                return _context.SaveChanges();
-            }
+            MenuItem MenuItemPriceUpdate = _context.MenuItems.FirstOrDefault(o => o.ItemID==id);
+            MenuItemPriceUpdate.Price = newPrice;
             return _context.SaveChanges();
         }
-
+        public int UpdateMenuItem(int id, MenuItem menuItem)
+        {
+            MenuItem m = _context.MenuItems.FirstOrDefault(p => p.ItemID==id);
+            m.ItemID=id;
+            m.Name = menuItem.Name;
+            m.Description = menuItem.Description;
+            m.Price = menuItem.Price;
+            return _context.SaveChanges();
+        }
         public int DeleteMenuItem(int id)
         {
             var DeleteMenuItem = _context.MenuItems.FirstOrDefault(m =>m.ItemID == id);
-            if(DeleteMenuItem != null)
-            {
-                _context.MenuItems.Remove(DeleteMenuItem);
-                return _context.SaveChanges();
-            }
+            _context.MenuItems.Remove(DeleteMenuItem);
             return _context.SaveChanges();
         }
     }
