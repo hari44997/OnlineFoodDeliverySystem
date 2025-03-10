@@ -64,7 +64,7 @@ namespace OnlineFoodDeliverySystem.Data
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.MenuItem)
                 .WithMany(m => m.OrderItems)
-                .HasForeignKey(oi => oi.MenuItem)
+                .HasForeignKey(oi => oi.ItemID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Order and Delivery (One - One)

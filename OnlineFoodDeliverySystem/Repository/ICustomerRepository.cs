@@ -1,6 +1,12 @@
 ﻿namespace OnlineFoodDeliverySystem.Repository
 {
-    public class ICustomerRepository
+    public interface ICustomerRepository
     {
+        List<Customer> GetAllCustomers();
+        Customer GetCustomerById(int id);
+        void AddCustomer(Customer customer);
+        int UpdateCustomer(Customer customer);
+        void DeleteCustomer(int id);
+
     }
 }
