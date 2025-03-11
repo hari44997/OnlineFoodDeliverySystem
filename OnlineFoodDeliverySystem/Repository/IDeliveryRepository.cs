@@ -8,7 +8,7 @@ namespace OnlineFoodDeliverySystem.Repository
         Delivery GetDeliveryById(int id);
         int UpdateStatus(int id, string  status);
 
-        void AddDelivery(Delivery delivery);
+        bool AddDelivery(Delivery delivery);
         void CancelDelivery(int deliveryId);
 
     }

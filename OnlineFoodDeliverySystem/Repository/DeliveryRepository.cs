@@ -28,10 +28,16 @@ namespace OnlineFoodDeliverySystem.Repository
             Updatestatus.Status = status;
             return _context.SaveChanges();
         }
-        public void AddDelivery(Delivery delivery)
+        public bool AddDelivery(Delivery delivery)
         {
-            _context.Deliveries.Add(delivery);
-            _context.SaveChanges();
+          var adddelivery= _context.Deliveries.FirstOrDefault(f => f.DeliveryID == delivery.DeliveryID);
+            if (adddelivery == null)
+            {
+                _context.Deliveries.Add(delivery);
+                return true;
+            }
+            return false;
+
         }
         public void CancelDelivery(int deliveryId)
         {

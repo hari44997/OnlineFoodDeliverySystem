@@ -11,17 +11,22 @@ namespace OnlineFoodDeliverySystem.Repository
             _context = context;
         }
 
-        public void AddCustomer(Customer customer)
+        public bool AddCustomer(Customer customer)
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            Customer addCustomer = _context.Customers.FirstOrDefault(i => i.CustomerID == customer.CustomerID);
+            if (addCustomer == null)
+            {
+                _context.Customers.Add(customer);
+                return true;
+            }
+            return false;
         }
 
-        public void DeleteCustomer(int id)
+        public int DeleteCustomer(int id)
         {
             var Delcustomer = _context.Customers.FirstOrDefault(c => c.CustomerID == id);
             _context.Customers.Remove(Delcustomer);
-            _context.SaveChanges();
+            return _context.SaveChanges();
             
         }
 

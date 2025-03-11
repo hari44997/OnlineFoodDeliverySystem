@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
-using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
+//using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
 
-namespace OnlineFoodDeliverySystem.Controllers
+/*namespace OnlineFoodDeliverySystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -67,4 +67,4 @@ namespace OnlineFoodDeliverySystem.Controllers
 
     }
 
-}
+}*/
