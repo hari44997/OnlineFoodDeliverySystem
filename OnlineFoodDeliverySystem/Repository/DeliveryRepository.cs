@@ -22,9 +22,22 @@ namespace OnlineFoodDeliverySystem.Repository
             return _context.Deliveries.ToList();
         }
 
-        public Delivery GetAgentById(int id)
+        public int UpdateStatus(int id, string status)
         {
-            return _context.Deliveries.FirstOrDefault(p => p.AgentID == id);
+            var Updatestatus = _context.Deliveries.FirstOrDefault(d => d.DeliveryID == id);
+            Updatestatus.Status = status;
+            return _context.SaveChanges();
+        }
+        public void AddDelivery(Delivery delivery)
+        {
+            _context.Deliveries.Add(delivery);
+            _context.SaveChanges();
+        }
+        public void CancelDelivery(int deliveryId)
+        {
+            var Canceldelivery = _context.Deliveries.FirstOrDefault(c => c.DeliveryID == deliveryId);
+            _context.Deliveries.Remove(Canceldelivery);
+            _context.SaveChanges();
         }
     }
 }

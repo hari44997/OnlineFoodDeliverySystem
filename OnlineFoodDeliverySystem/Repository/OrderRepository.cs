@@ -34,5 +34,11 @@ namespace OnlineFoodDeliverySystem.Repository
             UpdateStatus.Status = status;
             return _context.SaveChanges();
         }
+        public int DeleteOrder(int id)
+        {
+            var deleteOrder = _context.Orders.FirstOrDefault(o => o.OrderID==id);
+            _context.Orders.Remove(deleteOrder);
+            return _context.SaveChanges();
+        }
     }
 }

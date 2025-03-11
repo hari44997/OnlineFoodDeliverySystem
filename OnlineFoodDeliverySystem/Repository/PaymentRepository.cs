@@ -25,5 +25,22 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             return _context.Payments.ToList();
         }
+        public void AddPayment(Payment payment)
+        {
+            _context.Payments.Add(payment);
+            _context.SaveChanges();
+        }
+        public void UpdatePaymentStatus(int id, string status)
+        {
+            var Updatestatus = _context.Payments.FirstOrDefault(d => d.PaymentID == id);
+            Updatestatus.Status = status;
+            _context.SaveChanges();
+        }
+        public void DeletePayment(int id)
+        {
+            var removeid = _context.Payments.FirstOrDefault(d => d.PaymentID == id);
+            _context.Payments.Remove(removeid);
+            _context.SaveChanges();
+        }
     }
 }

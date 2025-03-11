@@ -1,8 +1,8 @@
 ﻿using OnlineFoodDeliverySystem.Models;
 
-namespace OnlineFoodDeliverySystem.Repository
+namespace OnlineFoodDeliverySystem.Serivces
 {
-    public interface IPaymentRepository
+    public interface IPaymentService
     {
         List<Payment> GetPayments();
         Payment GetPaymentById(int id);
@@ -10,6 +10,5 @@ namespace OnlineFoodDeliverySystem.Repository
         void AddPayment(Payment payment);
         void UpdatePaymentStatus(int id, string status);
         void DeletePayment(int id);
-
     }
 }
