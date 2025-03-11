@@ -1,4 +1,5 @@
-﻿using OnlineFoodDeliverySystem.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem.Repository
@@ -11,36 +12,36 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             _context = context;
         }
-        public Payment GetPaymentById(int id)
+        public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
         {
-            return _context.Payments.Find(id);
+            return await _context.Payments.ToListAsync();
         }
 
-        public Payment GetPaymentByMethod(string method)
+        public async Task<Payment> GetPaymentByIdAsync(int paymentId)
         {
-            return _context.Payments.FirstOrDefault(p => p.PaymentMethod == method);
+            return await _context.Payments.FindAsync(paymentId);
         }
 
-        public List<Payment> GetPayments()
+        public async Task AddPaymentAsync(Payment payment)
         {
-            return _context.Payments.ToList();
+            await _context.Payments.AddAsync(payment);
+            await _context.SaveChangesAsync();
         }
-        public void AddPayment(Payment payment)
+
+        public async Task UpdatePaymentAsync(Payment payment)
         {
-            _context.Payments.Add(payment);
-            _context.SaveChanges();
+            _context.Payments.Update(payment);
+            await _context.SaveChangesAsync();
         }
-        public void UpdatePaymentStatus(int id, string status)
+
+        public async Task DeletePaymentAsync(int paymentId)
         {
-            var Updatestatus = _context.Payments.FirstOrDefault(d => d.PaymentID == id);
-            Updatestatus.Status = status;
-            _context.SaveChanges();
-        }
-        public void DeletePayment(int id)
-        {
-            var removeid = _context.Payments.FirstOrDefault(d => d.PaymentID == id);
-            _context.Payments.Remove(removeid);
-            _context.SaveChanges();
+            var payment = await _context.Payments.FindAsync(paymentId);
+            if (payment != null)
+            {
+                _context.Payments.Remove(payment);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

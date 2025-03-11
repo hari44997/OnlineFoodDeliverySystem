@@ -1,55 +1,40 @@
 ﻿using System;
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Repository;
 
 namespace OnlineFoodDeliverySystem.Serivces
 {
     public class CustomerService : ICustomerService
     {
-        private readonly FoodDbContext _context;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomerService(FoodDbContext context)
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
+        }
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
+        {
+            return await _customerRepository.GetAllCustomersAsync();
         }
 
-        public int AddCustomer(Customer customer)
+        public async Task<Customer> GetCustomerByIdAsync(int customerId)
         {
-            var customer1 = new Customer
-            {
-                Name = customer.Name,
-                Email = customer.Email,
-                Phone = customer.Phone,
-                Address = customer.Address
-            };
-
-            _context.Customers.Add(customer1);
-            return  _context.SaveChanges();
+            return await _customerRepository.GetCustomerByIdAsync(customerId);
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task AddCustomerAsync(Customer customer)
         {
-            return _context.Customers.Find(id);
+            await _customerRepository.AddCustomerAsync(customer);
         }
 
-        public List<Customer> GetAllCustomers()
+        public async Task UpdateCustomerAsync(Customer customer)
         {
-            return _context.Customers.ToList();
+            await _customerRepository.UpdateCustomerAsync(customer);
         }
 
-
-        
-        
-
-        public int UpdateCustomer(Customer customer)
+        public async Task DeleteCustomerAsync(int customerId)
         {
-            throw new NotImplementedException();
-        }
-
-        public int DeleteCustomer(int id)
-        {
-            throw new NotImplementedException();
+            await _customerRepository.DeleteCustomerAsync(customerId);
         }
     }
-    
-   
 }

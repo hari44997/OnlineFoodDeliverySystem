@@ -4,54 +4,56 @@ using OnlineFoodDeliverySystem;
 using OnlineFoodDeliverySystem.Serivces;
 
 [ApiController]
-[Route("api/customers")]
-public class CustomerController : ControllerBase
+[Route("api/[controller]")]
+public class CustomersController : ControllerBase
 {
     private readonly ICustomerService _customerService;
 
-    public CustomerController(ICustomerService customerService)
+    public CustomersController(ICustomerService customerService)
     {
         _customerService = customerService;
     }
 
-    [HttpPost("register")]
-    public IActionResult AddCustomer([FromBody] Customer customer)
+    [HttpGet]
+    public async Task<IActionResult> GetAllCustomers()
     {
-        var result = _customerService.AddCustomer(customer);
-        if (result > 0)
-        {
-            return Ok("Customer Registered Successfully");
-        }
-        return BadRequest("Registration Failed");
+        var customers = await _customerService.GetAllCustomersAsync();
+        return Ok(customers);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetCustomer(int id)
+    public async Task<IActionResult> GetCustomerById(int id)
     {
-        var customer = _customerService.GetCustomerById(id);
-        return customer != null ? Ok(customer) : NotFound();
+        var customer = await _customerService.GetCustomerByIdAsync(id);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+        return Ok(customer);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
+    {
+        await _customerService.AddCustomerAsync(customer);
+        return CreatedAtAction(nameof(GetCustomerById), new { id = customer.CustomerID }, customer);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateCustomer(int id, [FromBody] Customer customer)
+    public async Task<IActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
     {
-        customer.CustomerID = id;
-        var result = _customerService.UpdateCustomer(customer);
-        if (result > 0)
+        if (id != customer.CustomerID)
         {
-            return Ok("Customer Updated Successfully");
+            return BadRequest();
         }
-        return NotFound("Customer Not Found");
+        await _customerService.UpdateCustomerAsync(customer);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteCustomer(int id)
+    public async Task<IActionResult> DeleteCustomer(int id)
     {
-        var result = _customerService.DeleteCustomer(id);
-        if (result > 0)
-        {
-            return Ok("Customer Deleted Successfully");
-        }
-        return NotFound("Customer Not Found");
+        await _customerService.DeleteCustomerAsync(id);
+        return NoContent();
     }
 }

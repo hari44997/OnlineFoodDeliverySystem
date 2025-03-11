@@ -1,4 +1,5 @@
-﻿using OnlineFoodDeliverySystem.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem.Repository
@@ -12,38 +13,37 @@ namespace OnlineFoodDeliverySystem.Repository
             _context = context;
         }
 
-        public Delivery GetDeliveryById(int id)
+        public async Task<IEnumerable<Delivery>> GetAllDeliveriesAsync()
         {
-            return _context.Deliveries.Find(id);
+            return await _context.Deliveries.ToListAsync();
         }
 
-        public List<Delivery> GetDeliveryList()
+        public async Task<Delivery> GetDeliveryByIdAsync(int deliveryId)
         {
-            return _context.Deliveries.ToList();
+            return await _context.Deliveries.FindAsync(deliveryId);
         }
 
-        public int UpdateStatus(int id, string status)
+        public async Task AddDeliveryAsync(Delivery delivery)
         {
-            var Updatestatus = _context.Deliveries.FirstOrDefault(d => d.DeliveryID == id);
-            Updatestatus.Status = status;
-            return _context.SaveChanges();
+            await _context.Deliveries.AddAsync(delivery);
+            await _context.SaveChangesAsync();
         }
-        public bool AddDelivery(Delivery delivery)
+
+        public async Task UpdateDeliveryAsync(Delivery delivery)
         {
-          var adddelivery= _context.Deliveries.FirstOrDefault(f => f.DeliveryID == delivery.DeliveryID);
-            if (adddelivery == null)
+            _context.Deliveries.Update(delivery);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteDeliveryAsync(int deliveryId)
+        {
+            var delivery = await _context.Deliveries.FindAsync(deliveryId);
+            if (delivery != null)
             {
-                _context.Deliveries.Add(delivery);
-                return true;
+                _context.Deliveries.Remove(delivery);
+                await _context.SaveChangesAsync();
             }
-            return false;
-
-        }
-        public void CancelDelivery(int deliveryId)
-        {
-            var Canceldelivery = _context.Deliveries.FirstOrDefault(c => c.DeliveryID == deliveryId);
-            _context.Deliveries.Remove(Canceldelivery);
-            _context.SaveChanges();
         }
     }
+
 }

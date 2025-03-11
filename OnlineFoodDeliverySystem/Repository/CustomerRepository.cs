@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using OnlineFoodDeliverySystem.Data;
 
 namespace OnlineFoodDeliverySystem.Repository
@@ -11,44 +12,37 @@ namespace OnlineFoodDeliverySystem.Repository
             _context = context;
         }
 
-        public bool AddCustomer(Customer customer)
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
-            Customer addCustomer = _context.Customers.FirstOrDefault(i => i.CustomerID == customer.CustomerID);
-            if (addCustomer == null)
+            return await _context.Customers.ToListAsync();
+        }
+
+        public async Task<Customer> GetCustomerByIdAsync(int customerId)
+        {
+            return await _context.Customers.FindAsync(customerId);
+        }
+
+        public async Task AddCustomerAsync(Customer customer)
+        {
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateCustomerAsync(Customer customer)
+        {
+            _context.Customers.Update(customer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCustomerAsync(int customerId)
+        {
+            var customer = await _context.Customers.FindAsync(customerId);
+            if (customer != null)
             {
-                _context.Customers.Add(customer);
-                return true;
+                _context.Customers.Remove(customer);
+                await _context.SaveChangesAsync();
             }
-            return false;
         }
-
-        public int DeleteCustomer(int id)
-        {
-            var Delcustomer = _context.Customers.FirstOrDefault(c => c.CustomerID == id);
-            _context.Customers.Remove(Delcustomer);
-            return _context.SaveChanges();
-            
-        }
-
-        public List<Customer> GetAllCustomers()
-        {
-            return _context.Customers.ToList();
-        }
-
-        public Customer GetCustomerById(int id)
-        {
-            return _context.Customers.FirstOrDefault(g => g.CustomerID == id);
-        }
-
-        public int UpdateCustomer(Customer customer)
-        {
-            var UpdateCus = _context.Customers.FirstOrDefault( c=> c.CustomerID == customer.CustomerID);
-            _context.Customers.Update(UpdateCus);
-            return _context.SaveChanges();
-            
-        }
-
-
-        
     }
 }
+

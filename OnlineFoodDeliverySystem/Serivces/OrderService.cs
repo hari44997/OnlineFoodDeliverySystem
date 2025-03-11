@@ -1,39 +1,41 @@
 ﻿
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Repository;
 
 namespace OnlineFoodDeliverySystem.Serivces
 {
     public class OrderService : IOrderService
     {
-        private readonly FoodDbContext _context;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderService(FoodDbContext context)
+        public OrderService(IOrderRepository orderRepository)
         {
-            _context = context;
-        }
-        public void AddOrder(Order order)
-        {
-            throw new NotImplementedException();
+            _orderRepository = orderRepository;
         }
 
-        public int DeleteOrder(int id)
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
-            throw new NotImplementedException();
+            return await _orderRepository.GetAllOrdersAsync();
         }
 
-        public List<Order> GetAllOrders()
+        public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            throw new NotImplementedException();
+            return await _orderRepository.GetOrderByIdAsync(orderId);
         }
 
-        public Order GetOrderById(int id)
+        public async Task AddOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            await _orderRepository.AddOrderAsync(order);
         }
 
-        public int UpdateOrderStatus(int id, string status)
+        public async Task UpdateOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            await _orderRepository.UpdateOrderAsync(order);
+        }
+
+        public async Task DeleteOrderAsync(int orderId)
+        {
+            await _orderRepository.DeleteOrderAsync(orderId);
         }
     }
 }

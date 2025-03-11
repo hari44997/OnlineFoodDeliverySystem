@@ -1,5 +1,6 @@
 ﻿using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
+using OnlineFoodDeliverySystem.Repository;
 
 namespace OnlineFoodDeliverySystem.Serivces
 {
@@ -7,38 +8,36 @@ namespace OnlineFoodDeliverySystem.Serivces
     {
         private readonly FoodDbContext _context;
 
-        public PaymentService(FoodDbContext context)
+        private readonly IPaymentRepository _paymentRepository;
+
+        public PaymentService(IPaymentRepository paymentRepository)
         {
-            _context = context;
-        }
-        public void AddPayment(Payment payment)
-        {
-            throw new NotImplementedException();
+            _paymentRepository = paymentRepository;
         }
 
-        public void DeletePayment(int id)
+        public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
         {
-            throw new NotImplementedException();
+            return await _paymentRepository.GetAllPaymentsAsync();
         }
 
-        public Payment GetPaymentById(int id)
+        public async Task<Payment> GetPaymentByIdAsync(int paymentId)
         {
-            throw new NotImplementedException();
+            return await _paymentRepository.GetPaymentByIdAsync(paymentId);
         }
 
-        public Payment GetPaymentByMethod(string method)
+        public async Task AddPaymentAsync(Payment payment)
         {
-            throw new NotImplementedException();
+            await _paymentRepository.AddPaymentAsync(payment);
         }
 
-        public List<Payment> GetPayments()
+        public async Task UpdatePaymentAsync(Payment payment)
         {
-            throw new NotImplementedException();
+            await _paymentRepository.UpdatePaymentAsync(payment);
         }
 
-        public void UpdatePaymentStatus(int id, string status)
+        public async Task DeletePaymentAsync(int paymentId)
         {
-            throw new NotImplementedException();
+            await _paymentRepository.DeletePaymentAsync(paymentId);
         }
     }
 }

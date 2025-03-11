@@ -1,40 +1,41 @@
 ﻿using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
+using OnlineFoodDeliverySystem.Repository;
 
 namespace OnlineFoodDeliverySystem.Serivces
 {
-    public class DeliveryService:IDeliverService
+    public class DeliveryService:IDeliveryService
     {
-        private readonly FoodDbContext _context;
+        private readonly IDeliveryRepository _deliveryRepository;
 
-        public DeliveryService(FoodDbContext context)
+        public DeliveryService(IDeliveryRepository deliveryRepository)
         {
-            _context = context;
+            _deliveryRepository = deliveryRepository;
         }
 
-        public void AddDelivery(Delivery delivery)
+        public async Task<IEnumerable<Delivery>> GetAllDeliveriesAsync()
         {
-            throw new NotImplementedException();
+            return await _deliveryRepository.GetAllDeliveriesAsync();
         }
 
-        public void CancelDelivery(int deliveryId)
+        public async Task<Delivery> GetDeliveryByIdAsync(int deliveryId)
         {
-            throw new NotImplementedException();
+            return await _deliveryRepository.GetDeliveryByIdAsync(deliveryId);
         }
 
-        public Delivery GetDeliveryById(int id)
+        public async Task AddDeliveryAsync(Delivery delivery)
         {
-            throw new NotImplementedException();
+            await _deliveryRepository.AddDeliveryAsync(delivery);
         }
 
-        public List<Delivery> GetDeliveryList()
+        public async Task UpdateDeliveryAsync(Delivery delivery)
         {
-            throw new NotImplementedException();
+            await _deliveryRepository.UpdateDeliveryAsync(delivery);
         }
 
-        public int UpdateStatus(int id, string status)
+        public async Task DeleteDeliveryAsync(int deliveryId)
         {
-            throw new NotImplementedException();
+            await _deliveryRepository.DeleteDeliveryAsync(deliveryId);
         }
     }
 }

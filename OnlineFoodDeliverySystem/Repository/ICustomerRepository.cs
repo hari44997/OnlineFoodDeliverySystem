@@ -2,11 +2,11 @@
 {
     public interface ICustomerRepository
     {
-        List<Customer> GetAllCustomers();
-        Customer GetCustomerById(int id);
-        bool AddCustomer(Customer customer);
-        int UpdateCustomer(Customer customer);
-        int DeleteCustomer(int id);
+        Task<IEnumerable<Customer>> GetAllCustomersAsync();
+        Task<Customer> GetCustomerByIdAsync(int customerId);
+        Task AddCustomerAsync(Customer customer);
+        Task UpdateCustomerAsync(Customer customer);
+        Task DeleteCustomerAsync(int customerId);
 
     }
 }

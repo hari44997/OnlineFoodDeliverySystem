@@ -1,4 +1,5 @@
-﻿using OnlineFoodDeliverySystem.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineFoodDeliverySystem.Data;
 
 namespace OnlineFoodDeliverySystem.Repository
 {
@@ -10,43 +11,36 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             _context = context;
         }
-
-        public List<MenuItem> GetMenuItems()
+        public async Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync()
         {
-            return _context.MenuItems.ToList();
+            return await _context.MenuItems.ToListAsync();
         }
 
-        public int AddMenuItem(MenuItem menuItem)
+        public async Task<MenuItem> GetMenuItemByIdAsync(int itemId)
         {
-            _context.MenuItems.Add(menuItem);
-            return _context.SaveChanges();
+            return await _context.MenuItems.FindAsync(itemId);
         }
 
-        public MenuItem GetMenuItemById(int id)
+        public async Task AddMenuItemAsync(MenuItem menuItem)
         {
-            return _context.MenuItems.FirstOrDefault(m => m.ItemID == id);
+            await _context.MenuItems.AddAsync(menuItem);
+            await _context.SaveChangesAsync();
         }
 
-        public int UpdateItemPrice(int id, double newPrice)
+        public async Task UpdateMenuItemAsync(MenuItem menuItem)
         {
-            MenuItem MenuItemPriceUpdate = _context.MenuItems.FirstOrDefault(o => o.ItemID==id);
-            MenuItemPriceUpdate.Price = newPrice;
-            return _context.SaveChanges();
+            _context.MenuItems.Update(menuItem);
+            await _context.SaveChangesAsync();
         }
-        public int UpdateMenuItem(int id, MenuItem menuItem)
+
+        public async Task DeleteMenuItemAsync(int itemId)
         {
-            MenuItem m = _context.MenuItems.FirstOrDefault(p => p.ItemID==id);
-            m.ItemID=id;
-            m.Name = menuItem.Name;
-            m.Description = menuItem.Description;
-            m.Price = menuItem.Price;
-            return _context.SaveChanges();
-        }
-        public int DeleteMenuItem(int id)
-        {
-            var DeleteMenuItem = _context.MenuItems.FirstOrDefault(m =>m.ItemID == id);
-            _context.MenuItems.Remove(DeleteMenuItem);
-            return _context.SaveChanges();
+            var menuItem = await _context.MenuItems.FindAsync(itemId);
+            if (menuItem != null)
+            {
+                _context.MenuItems.Remove(menuItem);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

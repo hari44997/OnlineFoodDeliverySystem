@@ -2,11 +2,10 @@
 {
     public interface IMenuItemRepository
     {
-        List<MenuItem> GetMenuItems();
-        int AddMenuItem(MenuItem menuItem);
-        MenuItem GetMenuItemById(int id);
-        int UpdateItemPrice(int id, double newPrice);
-        int DeleteMenuItem(int id);
-        int UpdateMenuItem(int id, MenuItem menuItem);
+        Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync();
+        Task<MenuItem> GetMenuItemByIdAsync(int itemId);
+        Task AddMenuItemAsync(MenuItem menuItem);
+        Task UpdateMenuItemAsync(MenuItem menuItem);
+        Task DeleteMenuItemAsync(int itemId);
     }
 }

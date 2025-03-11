@@ -1,53 +1,62 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Serivces;
 
 namespace OnlineFoodDeliverySystem.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly FoodDbContext _context;
+        private readonly IOrderService _orderService;
 
-        private static List<Order> orders = new List<Order>();
-        public OrdersController(FoodDbContext context)
+        public OrdersController(IOrderService orderService)
         {
-            this._context = context;
+            _orderService = orderService;
         }
-        //Placing Order
-        [HttpPost]
-        public void PlaceOrder([FromBody] Order order)
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrders()
         {
-            order.OrderID = orders.Count + 1;
-            order.Status = "Pending";
-            orders.Add(order);
-            _context.SaveChanges();
+            var orders = await _orderService.GetAllOrdersAsync();
+            return Ok(orders);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetOrderStatus(int id)
+        public async Task<IActionResult> GetOrderById(int id)
         {
-            var order = orders.FirstOrDefault(o => o.OrderID == id);
+            var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
             {
                 return NotFound();
             }
-            return Ok(order.Status);
-        }
-        [HttpPut("{id}")]
-        public IActionResult UpdateOrderStatus(int id, [FromBody] string status)
-        {
-            var order = orders.FirstOrDefault(o => o.OrderID == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            order.Status = status;
             return Ok(order);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddOrder([FromBody] Order order)
+        {
+            await _orderService.AddOrderAsync(order);
+            return CreatedAtAction(nameof(GetOrderById), new { id = order.OrderID }, order);
+        }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder(int id, [FromBody] Order order)
+        {
+            if (id != order.OrderID)
+            {
+                return BadRequest();
+            }
+            await _orderService.UpdateOrderAsync(order);
+            return NoContent();
+        }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            await _orderService.DeleteOrderAsync(id);
+            return NoContent();
+        }
     }
 }

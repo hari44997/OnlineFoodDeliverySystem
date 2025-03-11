@@ -2,69 +2,63 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
-//using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
+using OnlineFoodDeliverySystem.Serivces;
+using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
 
-/*namespace OnlineFoodDeliverySystem.Controllers
+namespace OnlineFoodDeliverySystem.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class MenuItemsController : ControllerBase
     {
-        [ApiController]
-        [Route("api/menuitems")]
-        public class MenuItemController : ControllerBase
+        private readonly IMenuItemService _menuItemService;
+
+        public MenuItemsController(IMenuItemService menuItemService)
         {
-            private readonly IMenuItemService _menuItemService;
-
-            public MenuItemController(IMenuItemService menuItemService)
-            {
-                _menuItemService = menuItemService;
-            }
-
-            [HttpPost]
-            public async Task<IActionResult> AddMenuItem(MenuItemDto menuItemDto)
-            {
-                var result = await _menuItemService.AddMenuItem(menuItemDto);
-                return result ? Ok("Menu item added successfully") : BadRequest("Failed to add menu item");
-            }
-
-            [HttpGet("{restaurantId}")]
-            public async Task<IActionResult> GetMenuItems(int restaurantId)
-            {
-                var menuItems = await _menuItemService.GetMenuItems(restaurantId);
-                return Ok(menuItems);
-            }
+            _menuItemService = menuItemService;
         }
 
-        public class MenuItemService : IMenuItemService
+        [HttpGet]
+        public async Task<IActionResult> GetAllMenuItems()
         {
-            private readonly AppDbContext _context;
-
-            public MenuItemService(AppDbContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<bool> AddMenuItem(MenuItemDto menuItemDto)
-            {
-                var menuItem = new MenuItem
-                {
-                    Name = menuItemDto.Name,
-                    Description = menuItemDto.Description,
-                    Price = menuItemDto.Price,
-                    RestaurantID = menuItemDto.RestaurantID
-                };
-
-                _context.MenuItems.Add(menuItem);
-                return await _context.SaveChangesAsync() > 0;
-            }
-
-            public async Task<IEnumerable<MenuItem>> GetMenuItems(int restaurantId)
-            {
-                return await _context.MenuItems.Where(m => m.RestaurantID == restaurantId).ToListAsync();
-            }
+            var menuItems = await _menuItemService.GetAllMenuItemsAsync();
+            return Ok(menuItems);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMenuItemById(int id)
+        {
+            var menuItem = await _menuItemService.GetMenuItemByIdAsync(id);
+            if (menuItem == null)
+            {
+                return NotFound();
+            }
+            return Ok(menuItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMenuItem([FromBody] MenuItem menuItem)
+        {
+            await _menuItemService.AddMenuItemAsync(menuItem);
+            return CreatedAtAction(nameof(GetMenuItemById), new { id = menuItem.ItemID }, menuItem);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMenuItem(int id, [FromBody] MenuItem menuItem)
+        {
+            if (id != menuItem.ItemID)
+            {
+                return BadRequest();
+            }
+            await _menuItemService.UpdateMenuItemAsync(menuItem);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMenuItem(int id)
+        {
+            await _menuItemService.DeleteMenuItemAsync(id);
+            return NoContent();
+        }
     }
-
-}*/
+}
