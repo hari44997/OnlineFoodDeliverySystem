@@ -23,9 +23,9 @@ namespace OnlineFoodDeliverySystem
         //public MenuItem MenuItem { get; set; }
         public Delivery Delivery { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
-        
 
-        
+
+
 
 
     }
