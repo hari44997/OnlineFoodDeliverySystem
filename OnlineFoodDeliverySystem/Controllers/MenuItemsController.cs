@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
+using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
 
 namespace OnlineFoodDeliverySystem.Controllers
 {
@@ -8,40 +10,61 @@ namespace OnlineFoodDeliverySystem.Controllers
     [ApiController]
     public class MenuItemsController : ControllerBase
     {
-       /* private readonly FoodDbContext _context;
-        public MenuItemsController(FoodDbContext context) 
+        [ApiController]
+        [Route("api/menuitems")]
+        public class MenuItemController : ControllerBase
         {
-            this._context = context;
-        }
-        [HttpPost]
-        public void AddMenuItem(MenuItem menuItem)
-        {
-            _context.MenuItems.Add(menuItem);
-            _context.SaveChanges();
-        }
-        [HttpPut]
-        public MenuItem UpdateMenuItem(int id, string name)
-        {
-            var menuItem = _context.MenuItems.FirstOrDefault(x => x.ItemId==id);
-            if (menuItem != null)
+            private readonly IMenuItemService _menuItemService;
+
+            public MenuItemController(IMenuItemService menuItemService)
             {
-                menuItem.Name = name;
-                _context.SaveChanges();
+                _menuItemService = menuItemService;
             }
-            return menuItem;
-        }
-        [HttpDelete]
-          
-            public MenuItem RemoveMenuItem(string name)
-        {
-            var menuItem = _context.MenuItems.FirstOrDefault(x => x.Name == name);
-            if (menuItem != null)
+
+            [HttpPost]
+            public async Task<IActionResult> AddMenuItem(MenuItemDto menuItemDto)
             {
-                _context.MenuItems.Remove(menuItem);
-                _context.SaveChanges();
+                var result = await _menuItemService.AddMenuItem(menuItemDto);
+                return result ? Ok("Menu item added successfully") : BadRequest("Failed to add menu item");
             }
-            return menuItem;
-        }*/
+
+            [HttpGet("{restaurantId}")]
+            public async Task<IActionResult> GetMenuItems(int restaurantId)
+            {
+                var menuItems = await _menuItemService.GetMenuItems(restaurantId);
+                return Ok(menuItems);
+            }
+        }
+
+        public class MenuItemService : IMenuItemService
+        {
+            private readonly AppDbContext _context;
+
+            public MenuItemService(AppDbContext context)
+            {
+                _context = context;
+            }
+
+            public async Task<bool> AddMenuItem(MenuItemDto menuItemDto)
+            {
+                var menuItem = new MenuItem
+                {
+                    Name = menuItemDto.Name,
+                    Description = menuItemDto.Description,
+                    Price = menuItemDto.Price,
+                    RestaurantID = menuItemDto.RestaurantID
+                };
+
+                _context.MenuItems.Add(menuItem);
+                return await _context.SaveChangesAsync() > 0;
+            }
+
+            public async Task<IEnumerable<MenuItem>> GetMenuItems(int restaurantId)
+            {
+                return await _context.MenuItems.Where(m => m.RestaurantID == restaurantId).ToListAsync();
+            }
+        }
+
     }
-            
+
 }
