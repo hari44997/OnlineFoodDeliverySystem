@@ -8,7 +8,7 @@ namespace OnlineFoodDeliverySystem.Models
         public int PaymentID { get; set; }
         public int OrderID { get; set; }
         public string PaymentMethod {  get; set; }
-        public string status { get; set; }
+        public string Status { get; set; }
         public decimal amount { get; set; }
 
         public Order Order { get; set; }
