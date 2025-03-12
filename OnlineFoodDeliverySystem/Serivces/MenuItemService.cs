@@ -1,6 +1,7 @@
 ﻿using OnlineFoodDeliverySystem.Repository;
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Services;
+using OnlineFoodDeliverySystem.Exceptions;
 
 namespace OnlineFoodDeliverySystem.Services
 {
@@ -15,26 +16,49 @@ namespace OnlineFoodDeliverySystem.Services
 
         public async Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync()
         {
-            return await _menuItemRepository.GetAllMenuItemsAsync();
+            
+            var Menuitems = await _menuItemRepository.GetAllMenuItemsAsync();
+            return Menuitems.ToList();
         }
 
         public async Task<MenuItem> GetMenuItemByIdAsync(int itemId)
         {
-            return await _menuItemRepository.GetMenuItemByIdAsync(itemId);
+            MenuItem menuItem = await _menuItemRepository.GetMenuItemByIdAsync(itemId);
+            if(menuItem == null)
+            {
+                throw new NotFoundException($"MenuItem with id {itemId} does not exists");
+            }
+            return menuItem;
         }
 
         public async Task AddMenuItemAsync(MenuItem menuItem)
         {
+            var Additem = await _menuItemRepository.GetMenuItemByIdAsync(menuItem.ItemID);
+            if(menuItem != null)
+            {
+                throw new AlreadyExistsException($"MenuItem with id {menuItem.ItemID} already exists");
+            }
             await _menuItemRepository.AddMenuItemAsync(menuItem);
+
         }
 
-        public async Task UpdateMenuItemAsync(MenuItem menuItem)
+        public async Task UpdateMenuItemAsync(int id, MenuItem menuItem)
         {
-            await _menuItemRepository.UpdateMenuItemAsync(menuItem);
+            var UpdateItem = await _menuItemRepository.GetMenuItemByIdAsync(id);
+            if(UpdateItem == null)
+            {
+                throw new NotFoundException($"MenuItem with id {menuItem.ItemID} does not exists");
+            }
+            await _menuItemRepository.UpdateMenuItemAsync(id, menuItem);
         }
 
         public async Task DeleteMenuItemAsync(int itemId)
         {
+            var deleteItem = await _menuItemRepository.GetMenuItemByIdAsync(itemId);
+            if(deleteItem == null)
+            {
+                throw new NotFoundException($"MenuItem with id {itemId} does not exists");
+            }
             await _menuItemRepository.DeleteMenuItemAsync(itemId);
         }
     }

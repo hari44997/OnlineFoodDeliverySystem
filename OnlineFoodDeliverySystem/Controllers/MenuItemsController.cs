@@ -46,11 +46,11 @@ namespace OnlineFoodDeliverySystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMenuItem(int id, [FromBody] MenuItem menuItem)
         {
-            if (id != menuItem.ItemID)
-            {
-                return BadRequest();
-            }
-            await _menuItemService.UpdateMenuItemAsync(menuItem);
+            //if (id != menuItem.ItemID)
+            //{
+            //    return BadRequest();
+            //}
+            await _menuItemService.UpdateMenuItemAsync(id, menuItem);
             return NoContent();
         }
 
