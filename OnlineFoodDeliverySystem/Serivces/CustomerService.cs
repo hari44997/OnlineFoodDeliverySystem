@@ -42,14 +42,15 @@ namespace OnlineFoodDeliverySystem.Services
 
         }
 
-        public async Task UpdateCustomerAsync(Customer customer)
+        public async Task UpdateCustomerAsync(int id,Customer customer)
         {
-            var Updatecustomer = await _customerRepository.GetCustomerByIdAsync(customer.CustomerID);
+            var Updatecustomer = await _customerRepository.GetCustomerByIdAsync(id);
             if(Updatecustomer == null)
             {
                 throw new NotFoundException($"Customer with {customer.CustomerID} does not exists");
             }
-            await _customerRepository.UpdateCustomerAsync(customer);
+            
+            await _customerRepository.UpdateCustomerAsync(id,customer);
         }
 
         public async Task DeleteCustomerAsync(int customerId)

@@ -47,11 +47,11 @@ public class CustomersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateCustomer(int id, [FromBody] Customer customer)
     {
-        if (id != customer.CustomerID)
-        {
-            return BadRequest();
-        }
-        await _customerService.UpdateCustomerAsync(customer);
+        //if (id != customer.CustomerID)
+        //{
+        //    return BadRequest();
+        //}
+        await _customerService.UpdateCustomerAsync(id, customer);
         return NoContent();
     }
 

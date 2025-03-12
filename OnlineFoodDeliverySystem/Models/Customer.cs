@@ -6,7 +6,7 @@ namespace OnlineFoodDeliverySystem
     public class Customer
     {
         [Key]
-        public int? CustomerID { get; set; }
+        public int CustomerID { get; set; }
         public string? Name { get; set; }
         public int? Phone { get; set; }
         public string? Email { get; set; }

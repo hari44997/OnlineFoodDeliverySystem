@@ -28,9 +28,16 @@ namespace OnlineFoodDeliverySystem.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCustomerAsync(Customer customer)
+        public async Task UpdateCustomerAsync(int id, Customer customer)
         {
-            _context.Customers.Update(customer);
+
+            var cust=_context.Customers.Find(id);
+            cust.Name = customer.Name;
+            cust.Email = customer.Email;
+            cust.Phone = customer.Phone;
+            cust.Address = customer.Address;
+            
+            _context.Customers.Update(cust);
             await _context.SaveChangesAsync();
         }
 
