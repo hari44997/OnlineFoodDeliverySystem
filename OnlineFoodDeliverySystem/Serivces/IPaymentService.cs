@@ -1,6 +1,6 @@
 ﻿using OnlineFoodDeliverySystem.Models;
 
-namespace OnlineFoodDeliverySystem.Serivces
+namespace OnlineFoodDeliverySystem.Services
 {
     public interface IPaymentService
     {

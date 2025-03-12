@@ -1,4 +1,4 @@
-﻿namespace OnlineFoodDeliverySystem.Serivces
+﻿namespace OnlineFoodDeliverySystem.Services
 {
     public interface IOrderService
     {

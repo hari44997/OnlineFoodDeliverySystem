@@ -2,7 +2,7 @@
 using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Repository;
 
-namespace OnlineFoodDeliverySystem.Serivces
+namespace OnlineFoodDeliverySystem.Services
 {
     public class DeliveryService:IDeliveryService
     {

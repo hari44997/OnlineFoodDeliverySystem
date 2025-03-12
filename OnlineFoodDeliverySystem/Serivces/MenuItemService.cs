@@ -1,8 +1,10 @@
 ﻿using OnlineFoodDeliverySystem.Repository;
+using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Services;
 
-namespace OnlineFoodDeliverySystem.Serivces
+namespace OnlineFoodDeliverySystem.Services
 {
-    public class MenuItemService
+    public class MenuItemService:IMenuItemService
     {
         private readonly IMenuItemRepository _menuItemRepository;
 

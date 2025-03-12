@@ -1,4 +1,4 @@
-﻿namespace OnlineFoodDeliverySystem.Serivces
+﻿namespace OnlineFoodDeliverySystem.Services
 {
     public interface ICustomerService
     {
@@ -8,4 +8,5 @@
         Task UpdateCustomerAsync(Customer customer);
         Task DeleteCustomerAsync(int customerId);
     }
+
 }

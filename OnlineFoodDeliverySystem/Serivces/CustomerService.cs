@@ -2,8 +2,10 @@
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Repository;
 
-namespace OnlineFoodDeliverySystem.Serivces
+namespace OnlineFoodDeliverySystem.Services
 {
+
+
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;

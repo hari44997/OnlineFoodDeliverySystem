@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem;
-using OnlineFoodDeliverySystem.Serivces;
+using OnlineFoodDeliverySystem.Services;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -35,6 +35,11 @@ public class CustomersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddCustomer([FromBody] Customer customer)
     {
+        if (customer == null)
+        {
+            return BadRequest("Customer data is required.");
+        }
+
         await _customerService.AddCustomerAsync(customer);
         return CreatedAtAction(nameof(GetCustomerById), new { id = customer.CustomerID }, customer);
     }
