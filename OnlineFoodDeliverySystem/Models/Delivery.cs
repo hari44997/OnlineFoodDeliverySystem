@@ -6,7 +6,7 @@ namespace OnlineFoodDeliverySystem.Models
     {
         [Key]
 
-        public int? DeliveryID { get; set; }
+        public int DeliveryID { get; set; }
         public int? OrderID {  get; set; }
         public int? AgentID { get; set; }
         public string? Status { get; set; } //In Progress,Delivered

@@ -16,13 +16,13 @@ namespace OnlineFoodDeliverySystem
 
 
 
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
         //public int ItemID {  get; set; }
-        public Payment Payment { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public Payment? Payment { get; set; }
+        public Restaurant? Restaurant { get; set; }
         //public MenuItem MenuItem { get; set; }
-        public Delivery Delivery { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public Delivery? Delivery { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
 
 
 
