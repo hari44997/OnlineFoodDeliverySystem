@@ -45,11 +45,11 @@ namespace OnlineFoodDeliverySystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] Order order)
         {
-            if (id != order.OrderID)
-            {
-                return BadRequest();
-            }
-            await _orderService.UpdateOrderAsync(order);
+            //if (id != order.OrderID)
+            //{
+            //    return BadRequest();
+            //}
+            await _orderService.UpdateOrderAsync(id, order);
             return NoContent();
         }
 
