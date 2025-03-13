@@ -29,10 +29,10 @@ namespace OnlineFoodDeliverySystem.Controllers
         public async Task<IActionResult> GetDeliveryById(int id)
         {
             var delivery = await _deliveryService.GetDeliveryByIdAsync(id);
-            if (delivery == null)
-            {
-                return NotFound();
-            }
+            //if (delivery == null)
+            //{
+            //    return NotFound();
+            //}
             return Ok(delivery);
         }
 
@@ -50,7 +50,7 @@ namespace OnlineFoodDeliverySystem.Controllers
             {
                 return BadRequest();
             }
-            await _deliveryService.UpdateDeliveryAsync(delivery);
+            await _deliveryService.UpdateDeliveryAsync(id,delivery);
             return NoContent();
         }
 
