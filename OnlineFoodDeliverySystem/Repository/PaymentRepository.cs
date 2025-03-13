@@ -28,8 +28,12 @@ namespace OnlineFoodDeliverySystem.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdatePaymentAsync(Payment payment)
+        public async Task UpdatePaymentAsync(int id, Payment payment)
         {
+            var pay = _context.Payments.Find(id);
+            pay.PaymentMethod = payment.PaymentMethod;
+            pay.amount = payment.amount;
+            pay.Status = payment.Status;
             _context.Payments.Update(payment);
             await _context.SaveChangesAsync();
         }

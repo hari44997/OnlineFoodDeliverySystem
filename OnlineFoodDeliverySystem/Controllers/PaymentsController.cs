@@ -46,11 +46,11 @@ namespace OnlineFoodDeliverySystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePayment(int id, [FromBody] Payment payment)
         {
-            if (id != payment.PaymentID)
-            {
-                return BadRequest();
-            }
-            await _paymentService.UpdatePaymentAsync(payment);
+            //if (id != payment.PaymentID)
+            //{
+            //    return BadRequest();
+            //}
+            await _paymentService.UpdatePaymentAsync(id, payment);
             return NoContent();
         }
 
