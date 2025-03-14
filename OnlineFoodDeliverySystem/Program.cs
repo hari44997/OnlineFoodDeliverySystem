@@ -1,4 +1,8 @@
+using E_LearningPlatform.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Repository;
 using OnlineFoodDeliverySystem.Services;
@@ -26,9 +30,31 @@ builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
+var key = "This is my first secret Test Key for authentication, test it and use it when needed";
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key))
+    };
+});
+
+builder.Services.AddScoped<IAuthentication, Authentication>(provider =>
+    new Authentication(provider.GetRequiredService<FoodDbContext>(), key));
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,6 +63,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
+app.UseAuthentication(); 
+
+// Add this line to enable authentication middleware
 app.UseAuthorization();
 
 app.MapControllers();
