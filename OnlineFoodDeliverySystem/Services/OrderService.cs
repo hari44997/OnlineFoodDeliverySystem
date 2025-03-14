@@ -18,7 +18,7 @@ namespace OnlineFoodDeliverySystem.Services
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             var orders = await _orderRepository.GetAllOrdersAsync();
-            return orders;
+            return orders.ToList();
 
         }
 
