@@ -34,7 +34,7 @@ namespace OnlineFoodDeliverySystem.Services
         public async Task AddMenuItemAsync(MenuItem menuItem)
         {
             var Additem = await _menuItemRepository.GetMenuItemByIdAsync(menuItem.ItemID);
-            if(menuItem != null)
+            if(Additem != null)
             {
                 throw new AlreadyExistsException($"MenuItem with id {menuItem.ItemID} already exists");
             }

@@ -34,11 +34,11 @@ namespace OnlineFoodDeliverySystem.Services
 
         public async Task AddDeliveryAsync(Delivery delivery)
         {
-            var AddDelivery =  _deliveryRepository.GetDeliveryByIdAsync(delivery.DeliveryID);
-            if (AddDelivery != null)
-            {
-                throw new AlreadyExistsException($"Delivery with id {delivery.DeliveryID} already exists");
-            }    
+            //var AddDelivery =  _deliveryRepository.GetDeliveryByIdAsync(delivery.DeliveryID);
+            //if (AddDelivery != null)
+            //{
+            //    throw new AlreadyExistsException($"Delivery with id {delivery.DeliveryID} already exists");
+            //}    
             await _deliveryRepository.AddDeliveryAsync(delivery);
         }
 
