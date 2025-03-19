@@ -7,26 +7,31 @@ namespace OnlineFoodDeliverySystem
     {
         [Key]
         public int OrderID { get; set; }
+        [Required,]
         public int? CustomerID { get; set; }
         public int? RestaurantID { get; set; }
-        public string? Status { get; set; }
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+
+        [DataType(DataType.Currency)]
         public double? TotalAmount { get; set; }
+
+        public DateTime? OrderDate { get; set; } = DateTime.UtcNow;
 
 
 
 
 
         public Customer? Customer { get; set; }
-        //public int ItemID {  get; set; }
         public Payment? Payment { get; set; }
         public Restaurant? Restaurant { get; set; }
-        //public MenuItem MenuItem { get; set; }
         public Delivery? Delivery { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }
-
-
-
-
-
+    }
+    public enum OrderStatus
+    {
+        Pending,
+        Accepted,
+        Preparing,
+        Delivered
     }
 }

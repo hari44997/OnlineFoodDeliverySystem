@@ -7,10 +7,10 @@ namespace OnlineFoodDeliverySystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RsetaurantController : ControllerBase
+    public class RestaurantController : ControllerBase
     {
         private readonly IRestaurantService _restaurantService;
-        public RsetaurantController(IRestaurantService restaurantService)
+        public RestaurantController(IRestaurantService restaurantService)
         {
             _restaurantService = restaurantService;
         }

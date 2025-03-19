@@ -9,8 +9,10 @@ namespace OnlineFoodDeliverySystem.Models
         public int? OrderID {  get; set; }
         public int? ItemID {  get; set; }
         public int? Quantity {  get; set; }
-        public decimal? Price {  get; set; }
 
+        [DataType(DataType.Currency)]
+        public decimal? Price {  get; set; }
+          
         public Order? Order { get; set; }
         public MenuItem? MenuItem { get; set; }
     }

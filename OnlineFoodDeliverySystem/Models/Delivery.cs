@@ -9,11 +9,19 @@ namespace OnlineFoodDeliverySystem.Models
         public int DeliveryID { get; set; }
         public int? OrderID {  get; set; }
         public int? AgentID { get; set; }
-        public string? Status { get; set; } //In Progress,Delivered
+        public DeliveryStatus Status { get; set; } = DeliveryStatus.Progress;
+
+        [DataType(DataType.DateTime)]
         public DateTime EstimatedTimeOfArrival {  get; set; }
         public Order? Order { get; set; }
 
         public Agent? Agent { get; set; }
         
+    }
+
+    public enum DeliveryStatus
+    {
+        Progress,
+        Delivered
     }
 }

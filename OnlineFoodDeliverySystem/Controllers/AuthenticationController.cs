@@ -4,7 +4,7 @@ using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Repository;
 
 
-namespace E_LearningPlatform.Controllers
+namespace OnlineFoodDeliverySystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,11 +17,16 @@ namespace E_LearningPlatform.Controllers
             this.jwtAuth = jwtAuth;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("authentication")]
         public IActionResult Authentication([FromBody] User user)
         {
-            var token = jwtAuth.Authenticate(user.Email, user.Password);
+            var token = jwtAuth.Authenticate(user.EmailAddress, user.Password);
             if (token == null)
             {
                 return Unauthorized();

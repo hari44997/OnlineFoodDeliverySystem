@@ -3,10 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using OnlineFoodDeliverySystem.Repository;
 using OnlineFoodDeliverySystem.Data;
 
-namespace E_LearningPlatform.Authentication
+namespace OnlineFoodDeliverySystem.Repository
 {
     public class Authentication : IAuthentication
     {

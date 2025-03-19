@@ -27,6 +27,9 @@ namespace OnlineFoodDeliverySystem.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         {
@@ -86,6 +89,12 @@ namespace OnlineFoodDeliverySystem.Data
                 .HasOne(p => p.Order)
                 .WithOne(o => o.Payment)
                 .HasForeignKey<Payment>(p => p.OrderID)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Roles and Users
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.Users)
+                .WithOne(u => u.Role)
+                .HasForeignKey(r => r.RoleID)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
