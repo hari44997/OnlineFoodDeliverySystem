@@ -4,7 +4,7 @@ using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Repository;
 
 
-namespace E_LearningPlatform.Controllers
+namespace OnlineFoodDeliverySystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
