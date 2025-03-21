@@ -7,16 +7,22 @@ namespace OnlineFoodDeliverySystem.Models
     {
         [Key]
         public int AgentID { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string? Name { get; set; }
 
+        [Required]
         [DataType(DataType.PhoneNumber)]
-        public int? Phone { get; set; }
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
+        public string? Phone { get; set; }
+
         public ICollection<Delivery>? Deliveries { get; set; }
 
+        [Required]
         public int? RoleID { get; set; }
 
+        // Navigation Property
         public Role? Role { get; set; }
-
-
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IAuthentication
     {
-        string Authenticate(string Email, string password);
+        string Authenticate(string email, string password);
     }
 }

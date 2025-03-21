@@ -12,6 +12,7 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
         {
             return await _context.Payments.ToListAsync();
@@ -30,20 +31,23 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public async Task UpdatePaymentAsync(int id, Payment payment)
         {
-            var pay = _context.Payments.Find(id);
-            pay.PaymentMethod = payment.PaymentMethod;
-            pay.amount = payment.amount;
-            pay.Status = payment.Status;
-            _context.Payments.Update(payment);
-            await _context.SaveChangesAsync();
+            var paymentToUpdate = await _context.Payments.FindAsync(id);
+            if (paymentToUpdate != null)
+            {
+                paymentToUpdate.PaymentMethod = payment.PaymentMethod;
+                paymentToUpdate.Amount = payment.Amount;
+                paymentToUpdate.Status = payment.Status;
+                _context.Payments.Update(paymentToUpdate);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeletePaymentAsync(int paymentId)
         {
-            var payment = await _context.Payments.FindAsync(paymentId);
-            if (payment != null)
+            var paymentToDelete = await _context.Payments.FindAsync(paymentId);
+            if (paymentToDelete != null)
             {
-                _context.Payments.Remove(payment);
+                _context.Payments.Remove(paymentToDelete);
                 await _context.SaveChangesAsync();
             }
         }

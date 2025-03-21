@@ -1,4 +1,6 @@
-﻿namespace OnlineFoodDeliverySystem.Repository
+﻿using OnlineFoodDeliverySystem.Models;
+
+namespace OnlineFoodDeliverySystem.Repository
 {
     public interface IMenuItemRepository
     {

@@ -29,23 +29,28 @@ namespace OnlineFoodDeliverySystem.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateDeliveryAsync(int id,Delivery delivery)
+        public async Task UpdateDeliveryAsync(int id, Delivery delivery)
         {
-            var updatedelivery = await _context.Deliveries.FindAsync(id);
-            updatedelivery.Status = delivery.Status;
-            _context.Deliveries.Update(updatedelivery);
-            await _context.SaveChangesAsync();
+            var deliveryToUpdate = await _context.Deliveries.FindAsync(id);
+            if (deliveryToUpdate != null)
+            {
+                deliveryToUpdate.Status = delivery.Status;
+                deliveryToUpdate.EstimatedTimeOfArrival = delivery.EstimatedTimeOfArrival;
+                deliveryToUpdate.OrderID = delivery.OrderID;
+                deliveryToUpdate.AgentID = delivery.AgentID;
+                _context.Deliveries.Update(deliveryToUpdate);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteDeliveryAsync(int deliveryId)
         {
-            var delivery = await _context.Deliveries.FindAsync(deliveryId);
-            if (delivery != null)
+            var deliveryToDelete = await _context.Deliveries.FindAsync(deliveryId);
+            if (deliveryToDelete != null)
             {
-                _context.Deliveries.Remove(delivery);
+                _context.Deliveries.Remove(deliveryToDelete);
                 await _context.SaveChangesAsync();
             }
         }
     }
-
 }

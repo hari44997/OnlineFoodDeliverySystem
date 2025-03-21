@@ -5,23 +5,23 @@ namespace OnlineFoodDeliverySystem.Models
     public class Delivery
     {
         [Key]
-
         public int DeliveryID { get; set; }
-        public int? OrderID {  get; set; }
+
+        [Required]
+        public int? OrderID { get; set; }
+
+        [Required]
         public int? AgentID { get; set; }
-        public DeliveryStatus Status { get; set; } = DeliveryStatus.Progress;
 
+        [Required]
+        public string? Status { get; set; }
+
+        [Required]
         [DataType(DataType.DateTime)]
-        public DateTime EstimatedTimeOfArrival {  get; set; }
+        public DateTime EstimatedTimeOfArrival { get; set; }
+
+        // Navigation Properties
         public Order? Order { get; set; }
-
         public Agent? Agent { get; set; }
-        
-    }
-
-    public enum DeliveryStatus
-    {
-        Progress,
-        Delivered
     }
 }

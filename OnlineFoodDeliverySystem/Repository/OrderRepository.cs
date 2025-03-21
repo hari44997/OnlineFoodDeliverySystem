@@ -1,6 +1,6 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem.Repository
 {
@@ -12,6 +12,7 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             return await _context.Orders.ToListAsync();
@@ -30,20 +31,26 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public async Task UpdateOrderAsync(int id, Order order)
         {
-            var ord = _context.Orders.Find(id);
-            ord.Status = order.Status;
-            ord.TotalAmount = order.TotalAmount;
+            var orderToUpdate = await _context.Orders.FindAsync(id);
+            if (orderToUpdate != null)
+            {
+                orderToUpdate.Status = order.Status;
+                orderToUpdate.TotalAmount = order.TotalAmount;
+                orderToUpdate.OrderDate = order.OrderDate;
+                orderToUpdate.CustomerID = order.CustomerID;
+                orderToUpdate.RestaurantID = order.RestaurantID;
 
-            _context.Orders.Update(ord);
-            await _context.SaveChangesAsync();
+                _context.Orders.Update(orderToUpdate);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteOrderAsync(int orderId)
         {
-            var order = await _context.Orders.FindAsync(orderId);
-            if (order != null)
+            var orderToDelete = await _context.Orders.FindAsync(orderId);
+            if (orderToDelete != null)
             {
-                _context.Orders.Remove(order);
+                _context.Orders.Remove(orderToDelete);
                 await _context.SaveChangesAsync();
             }
         }

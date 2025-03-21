@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem.Repository
 {
@@ -11,6 +12,7 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             _context = context;
         }
+
         public async Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync()
         {
             return await _context.MenuItems.ToListAsync();
@@ -29,20 +31,24 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public async Task UpdateMenuItemAsync(int id, MenuItem menuItem)
         {
-            var items = _context.MenuItems.Find(id);
-            items.Name = menuItem.Name;
-            items.Description = menuItem.Description;
-            items.Price = menuItem.Price;
-            _context.MenuItems.Update(items);
-            await _context.SaveChangesAsync();
+            var menuItemToUpdate = await _context.MenuItems.FindAsync(id);
+            if (menuItemToUpdate != null)
+            {
+                menuItemToUpdate.Name = menuItem.Name;
+                menuItemToUpdate.Description = menuItem.Description;
+                menuItemToUpdate.Price = menuItem.Price;
+                menuItemToUpdate.RestaurantID = menuItem.RestaurantID;
+                _context.MenuItems.Update(menuItemToUpdate);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteMenuItemAsync(int itemId)
         {
-            var menuItem = await _context.MenuItems.FindAsync(itemId);
-            if (menuItem != null)
+            var menuItemToDelete = await _context.MenuItems.FindAsync(itemId);
+            if (menuItemToDelete != null)
             {
-                _context.MenuItems.Remove(menuItem);
+                _context.MenuItems.Remove(menuItemToDelete);
                 await _context.SaveChangesAsync();
             }
         }

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
+using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Services;
-using static OnlineFoodDeliverySystem.Controllers.MenuItemsController;
 
 namespace OnlineFoodDeliverySystem.Controllers
 {

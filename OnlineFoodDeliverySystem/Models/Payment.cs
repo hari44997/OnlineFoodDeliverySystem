@@ -6,27 +6,22 @@ namespace OnlineFoodDeliverySystem.Models
     {
         [Key]
         public int PaymentID { get; set; }
+
+        [Required]
         public int? OrderID { get; set; }
-        public PaymentMethod PaymentMethod {  get; set; }
-        public PaymentStatus Status { get; set; } = PaymentStatus.Initiated;
 
+        [Required]
+        public string? PaymentMethod { get; set; }
+
+        [Required]
+        public string? Status { get; set; }
+
+        [Required]
         [DataType(DataType.Currency)]
-        public decimal? amount { get; set; }
+        [Range(0.01, 100000.00, ErrorMessage = "Amount must be between 0.01 and 100000.00")]
+        public decimal? Amount { get; set; }
 
+        // Navigation Property
         public Order? Order { get; set; }
-
-    }
-    public enum PaymentStatus
-    {
-        Initiated,
-        Failed,
-        Successful
-    }
-
-    public enum PaymentMethod
-    {
-        Card,
-        Wallet,
-        UPI
     }
 }

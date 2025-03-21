@@ -17,7 +17,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         [HttpGet]
         public IActionResult GetAllRestaurents()
         {
-            var restaurants = _restaurantService.GetAllRestaurantsAsync;
+            var restaurants = _restaurantService.GetAllRestaurantsAsync();
             return Ok(restaurants);
         }
         [HttpPost]

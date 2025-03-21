@@ -31,9 +31,9 @@ namespace OnlineFoodDeliverySystem.Services
             await _restaurantRepository.DeleteRestaurantAsync(restaurantId);
         }
 
-        public async Task<IEnumerable<Restaurant>> GetAllRestaurantsAsync()
+        public  List<Restaurant> GetAllRestaurantsAsync()
         {
-            var rest = await _restaurantRepository.GetallRestaurantsAsync();
+            var rest =  _restaurantRepository.GetallRestaurantsAsync();
             return rest;
 
         }

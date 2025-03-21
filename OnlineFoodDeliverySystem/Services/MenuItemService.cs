@@ -2,6 +2,7 @@
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Services;
 using OnlineFoodDeliverySystem.Exceptions;
+using OnlineFoodDeliverySystem.Models;
 
 namespace OnlineFoodDeliverySystem.Services
 {

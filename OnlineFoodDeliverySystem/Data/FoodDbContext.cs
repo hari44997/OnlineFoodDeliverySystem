@@ -10,13 +10,13 @@ namespace OnlineFoodDeliverySystem.Data
         public FoodDbContext(DbContextOptions<FoodDbContext> options) : base(options)
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        {
-            IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            string connectionString = configuration.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
-        }
+        //{
+        //    IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        //    string connectionString = configuration.GetConnectionString("DefaultConnection");
+        //    optionsBuilder.UseSqlServer(connectionString);
+        //}
 
 
         public DbSet<MenuItem> MenuItems { get; set; }
@@ -46,7 +46,7 @@ namespace OnlineFoodDeliverySystem.Data
             modelBuilder.Entity<MenuItem>()
                 .HasOne(m => m.Restaurant)
                 .WithMany(r => r.MenuItems)
-                .HasForeignKey(m => m.RestaruntID)
+                .HasForeignKey(m => m.RestaurantID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             //Restaurant and order(one - to- many)

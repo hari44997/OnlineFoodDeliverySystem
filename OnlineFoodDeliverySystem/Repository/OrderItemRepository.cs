@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
 
@@ -8,10 +7,12 @@ namespace OnlineFoodDeliverySystem.Repository
     public class OrderItemRepository : IOrderItemRepository
     {
         private readonly FoodDbContext _context;
+
         public OrderItemRepository(FoodDbContext context)
         {
             _context = context;
         }
+
         public async Task AddOrderItemAsync(OrderItem orderItem)
         {
             await _context.OrderItems.AddAsync(orderItem);
@@ -20,10 +21,10 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public async Task DeleteOrderItemAsync(int id)
         {
-            var deleteOrderItem = await _context.OrderItems.FindAsync(id);
-            if (deleteOrderItem != null)
+            var orderItemToDelete = await _context.OrderItems.FindAsync(id);
+            if (orderItemToDelete != null)
             {
-                _context.OrderItems.Remove(deleteOrderItem);
+                _context.OrderItems.Remove(orderItemToDelete);
                 await _context.SaveChangesAsync();
             }
         }
@@ -35,18 +36,22 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public async Task<OrderItem> GetOrderItemByIdAsync(int id)
         {
-            var getorderItem = await _context.OrderItems.FindAsync(id);
-            return getorderItem;
+            return await _context.OrderItems.FindAsync(id);
         }
 
         public async Task UpdateOrderItemAsync(int id, OrderItem orderItem)
         {
-            var UpdateOrderItems = await _context.OrderItems.FindAsync(id);
-            UpdateOrderItems.Quantity = orderItem.Quantity;
-            UpdateOrderItems.Price = orderItem.Price;
+            var orderItemToUpdate = await _context.OrderItems.FindAsync(id);
+            if (orderItemToUpdate != null)
+            {
+                orderItemToUpdate.Quantity = orderItem.Quantity;
+                orderItemToUpdate.Price = orderItem.Price;
+                orderItemToUpdate.OrderID = orderItem.OrderID;
+                orderItemToUpdate.ItemID = orderItem.ItemID;
 
-            _context.OrderItems.Update(UpdateOrderItems);
-            await _context.SaveChangesAsync();
+                _context.OrderItems.Update(orderItemToUpdate);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

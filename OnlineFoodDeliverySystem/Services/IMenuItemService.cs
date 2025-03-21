@@ -1,4 +1,6 @@
-﻿namespace OnlineFoodDeliverySystem.Services
+﻿using OnlineFoodDeliverySystem.Models;
+
+namespace OnlineFoodDeliverySystem.Services
 {
     public interface IMenuItemService
     {
