@@ -17,6 +17,7 @@ namespace OnlineFoodDeliverySystem.Repository
         {
             await _context.Admins.AddAsync(admin);
             await _context.SaveChangesAsync();
+
         }
 
         public async Task DeleteAdminAsync(int id)

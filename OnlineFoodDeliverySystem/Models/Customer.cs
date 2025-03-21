@@ -16,18 +16,18 @@ namespace OnlineFoodDeliverySystem.Models
         [Required(ErrorMessage = "Enter Phone Number")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
-        public string? Phone { get; set; }
+        public int? Phone { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string? CustomerEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 6)]
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$", ErrorMessage = "Password must be at least 6 characters long and contain both letters and numbers.")]
-        public string? Password { get; set; }
+        public string? CustomerPassword { get; set; }
 
         [StringLength(200)]
         public string? Address { get; set; }
@@ -35,9 +35,8 @@ namespace OnlineFoodDeliverySystem.Models
         [Required]
         public int? RoleID { get; set; }
 
-        public ICollection<Order>? Orders { get; set; }
-
         // Navigation Property
+        public ICollection<Order>? Orders { get; set; }
         public Role? Role { get; set; }
     }
 }
