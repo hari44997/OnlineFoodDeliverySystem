@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
@@ -19,6 +20,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> GetAllDeliveries()
         {
             var deliveries = await _deliveryService.GetAllDeliveriesAsync();

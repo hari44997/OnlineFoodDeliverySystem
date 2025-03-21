@@ -21,11 +21,12 @@ namespace OnlineFoodDeliverySystem.Repository
         public string Authenticate(string email, string password)
         {
             var user = _context.Users.FirstOrDefault(u => u.EmailAddress == email && u.Password == password);
+
             if (user == null)
             {
                 return null;
             }
-
+            var role = _context.Roles.Where(r => r.RoleID == user.RoleID).FirstOrDefault();
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -34,7 +35,7 @@ namespace OnlineFoodDeliverySystem.Repository
                 {
                     new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role.Names.FirstOrDefault())
+                    new Claim(ClaimTypes.Role, role.Names)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

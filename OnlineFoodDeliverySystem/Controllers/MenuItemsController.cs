@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
@@ -17,7 +18,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         {
             _menuItemService = menuItemService;
         }
-
+        [Authorize(Roles = "Admin,Customer")]
         [HttpGet]
         public async Task<IActionResult> GetAllMenuItems()
         {
@@ -26,6 +27,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Customer")]
         public async Task<IActionResult> GetMenuItemById(int id)
         {
             var menuItem = await _menuItemService.GetMenuItemByIdAsync(id);
@@ -37,6 +39,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddMenuItem([FromBody] MenuItem menuItem)
         {
             await _menuItemService.AddMenuItemAsync(menuItem);
@@ -44,6 +47,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateMenuItem(int id, [FromBody] MenuItem menuItem)
         {
             //if (id != menuItem.ItemID)
@@ -55,6 +59,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteMenuItem(int id)
         {
             await _menuItemService.DeleteMenuItemAsync(id);

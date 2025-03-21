@@ -17,11 +17,6 @@ namespace OnlineFoodDeliverySystem.Controllers
             this.jwtAuth = jwtAuth;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("authentication")]
         public IActionResult Authentication([FromBody] User user)

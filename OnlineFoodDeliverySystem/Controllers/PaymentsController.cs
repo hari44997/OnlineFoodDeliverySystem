@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Data;
 using OnlineFoodDeliverySystem.Models;
@@ -19,6 +20,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllPayments()
         {
             var payments = await _paymentService.GetAllPaymentsAsync();
@@ -26,6 +28,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Customer")]
         public async Task<IActionResult> GetPaymentById(int id)
         {
             var payment = await _paymentService.GetPaymentByIdAsync(id);
@@ -37,6 +40,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> AddPayment([FromBody] Payment payment)
         {
             await _paymentService.AddPaymentAsync(payment);
@@ -44,6 +48,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdatePayment(int id, [FromBody] Payment payment)
         {
             //if (id != payment.PaymentID)

@@ -8,7 +8,7 @@ namespace OnlineFoodDeliverySystem.Models
         public int RoleID { get; set; }
 
         [Required]
-        public string[] Names { get; set; } = { "Admin", "Customer", "Agent" };
+        public string?  Names { get; set; }
 
         // Navigation Properties
         public ICollection<Customer>? Customers { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Services;
@@ -17,6 +18,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetAllOrderItems()
         {
             var orderitems = await _orderItemService.GetAllOrderItemsAsync();
@@ -24,6 +26,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> GetOrderItemById(int id)
         {
             var orderitem = await _orderItemService.GetOrderItemByIdAsync(id);
@@ -42,6 +45,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> UpdateOrderItem(int id, [FromBody] OrderItem orderitem)
         {
             await _orderItemService.UpdateOrderItemAsync(id, orderitem);
@@ -49,6 +53,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> DeleteOrderItem(int id)
         {
             await _orderItemService.DeleteOrderItemAsync(id);
