@@ -22,7 +22,7 @@ namespace OnlineFoodDeliverySystem.Models
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$", ErrorMessage = "Password must be at least 6 characters long and contain both letters and numbers.")]
         public string? AdminPassword { get; set; }
 
-        [Required]
+        
         public int? RoleID { get; set; }
 
         // Navigation Property
