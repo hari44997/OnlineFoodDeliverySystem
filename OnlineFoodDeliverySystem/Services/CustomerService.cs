@@ -7,10 +7,13 @@ namespace OnlineFoodDeliverySystem.Services
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IUserRepository _userRepository;
 
-        public CustomerService(ICustomerRepository customerRepository)
+
+        public CustomerService(ICustomerRepository customerRepository, IUserRepository userRepository)
         {
-            _customerRepository = customerRepository;            
+            _customerRepository = customerRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
@@ -31,13 +34,8 @@ namespace OnlineFoodDeliverySystem.Services
 
         public async Task AddCustomerAsync(Customer customer)
         {
-            var Addcustomer = await _customerRepository.GetCustomerByIdAsync(customer.CustomerID);
-            if (Addcustomer != null)
-            {
-                throw new AlreadyExistsException($"Customer with {customer.CustomerID} already exists");
-            }
             await _customerRepository.AddCustomerAsync(customer);
-
+            await _userRepository.AddUserAsync(new User { EmailAddress = customer.CustomerEmail, Password = customer.CustomerPassword, RoleID = customer.RoleID });
         }
 
         public async Task UpdateCustomerAsync(int id, Customer customer)

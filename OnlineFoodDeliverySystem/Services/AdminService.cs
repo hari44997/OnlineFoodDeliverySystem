@@ -7,15 +7,17 @@ namespace OnlineFoodDeliverySystem.Services
     public class AdminService : IAdminService
     {
         private readonly IAdminRepository _adminRepository;
-
-        public AdminService(IAdminRepository adminRepository)
+        private readonly IUserRepository _userRepository;
+        public AdminService(IAdminRepository adminRepository, IUserRepository userRepository)
         {
             _adminRepository = adminRepository;
+            _userRepository = userRepository;
         }
 
         public async Task AddAdminAsync(Admin admin)
         {
             await _adminRepository.AddAdminAsync(admin);
+            await _userRepository.AddUserAsync(new User { EmailAddress=admin.AdminEmail,Password=admin.AdminPassword,RoleID=admin.RoleID});
         }
 
         public async Task DeleteAdminAsync(int id)

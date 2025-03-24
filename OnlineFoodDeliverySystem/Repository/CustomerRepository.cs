@@ -35,7 +35,7 @@ namespace OnlineFoodDeliverySystem.Repository
             if (customerToUpdate != null)
             {
                 customerToUpdate.Name = customer.Name;
-                customerToUpdate.Email = customer.Email;
+                customerToUpdate.CustomerEmail = customer.CustomerEmail;
                 customerToUpdate.Phone = customer.Phone;
                 customerToUpdate.Address = customer.Address;
                 customerToUpdate.RoleID = customer.RoleID;
