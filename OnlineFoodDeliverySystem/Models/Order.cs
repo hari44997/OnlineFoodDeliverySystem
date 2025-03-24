@@ -8,12 +8,12 @@ namespace OnlineFoodDeliverySystem.Models
         [Key]
         public int OrderID { get; set; }
 
-        [Required]
+        
         public int? CustomerID { get; set; }
 
-        [Required]
+        
         public int? RestaurantID { get; set; }
-        [Required]
+        
         public int? AgentID { get; set; }
 
         [Required]

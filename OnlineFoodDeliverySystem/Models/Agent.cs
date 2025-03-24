@@ -19,7 +19,7 @@ namespace OnlineFoodDeliverySystem.Models
 
         public ICollection<Delivery>? Deliveries { get; set; }
 
-        [Required]
+        
         public int? RoleID { get; set; }
 
         // Navigation Property

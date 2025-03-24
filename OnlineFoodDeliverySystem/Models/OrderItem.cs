@@ -7,10 +7,10 @@ namespace OnlineFoodDeliverySystem.Models
         [Key]
         public int OrderItemID { get; set; }
 
-        [Required]
+        
         public int? OrderID { get; set; }
 
-        [Required]
+        
         public int? ItemID { get; set; }
 
         [Required]

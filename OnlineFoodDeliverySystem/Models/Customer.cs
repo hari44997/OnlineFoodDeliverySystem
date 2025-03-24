@@ -32,7 +32,7 @@ namespace OnlineFoodDeliverySystem.Models
         [StringLength(200)]
         public string? Address { get; set; }
 
-        [Required]
+        
         public int? RoleID { get; set; }
 
         public ICollection<Order>? Orders { get; set; }
