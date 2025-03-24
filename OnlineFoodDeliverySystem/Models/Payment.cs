@@ -7,7 +7,6 @@ namespace OnlineFoodDeliverySystem.Models
         [Key]
         public int PaymentID { get; set; }
 
-        [Required]
         public int? OrderID { get; set; }
 
         [Required]
