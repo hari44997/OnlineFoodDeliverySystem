@@ -12,7 +12,7 @@ using OnlineFoodDeliverySystem.Data;
 namespace OnlineFoodDeliverySystem.Migrations
 {
     [DbContext(typeof(FoodDbContext))]
-    [Migration("20250319042835_IntialCreate")]
+    [Migration("20250319071802_IntialCreate")]
     partial class IntialCreate
     {
         /// <inheritdoc />

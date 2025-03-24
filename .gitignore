@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OnlineFoodDeliverySystem/Migrations/20250314100842_IntialCreate.cs
+/OnlineFoodDeliverySystem/Migrations/20250314100842_IntialCreate.Designer.cs

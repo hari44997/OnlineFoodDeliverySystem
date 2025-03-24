@@ -413,7 +413,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                     b.HasOne("OnlineFoodDeliverySystem.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("OnlineFoodDeliverySystem.Models.Restaurant", "Restaurant")
                         .WithMany("Orders")
