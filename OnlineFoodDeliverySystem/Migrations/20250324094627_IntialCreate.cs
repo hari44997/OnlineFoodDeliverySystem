@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineFoodDeliverySystem.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class IntialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     RestaurantID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RestaurantName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RestaurantName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -44,17 +44,17 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     ItemID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    RestaruntID = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RestaurantID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MenuItems", x => x.ItemID);
                     table.ForeignKey(
-                        name: "FK_MenuItems_Restaurants_RestaruntID",
-                        column: x => x.RestaruntID,
+                        name: "FK_MenuItems_Restaurants_RestaurantID",
+                        column: x => x.RestaurantID,
                         principalTable: "Restaurants",
                         principalColumn: "RestaurantID",
                         onDelete: ReferentialAction.Cascade);
@@ -66,9 +66,9 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     AdminID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AdminName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AdminEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AdminPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    AdminEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdminPassword = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     RoleID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -87,8 +87,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     AgentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -107,11 +107,11 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     CustomerID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerPassword = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     RoleID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -130,8 +130,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     RoleID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -151,15 +151,21 @@ namespace OnlineFoodDeliverySystem.Migrations
                 {
                     OrderID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerID = table.Column<int>(type: "int", nullable: false),
+                    CustomerID = table.Column<int>(type: "int", nullable: true),
                     RestaurantID = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    TotalAmount = table.Column<double>(type: "float", nullable: true),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    AgentID = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalAmount = table.Column<double>(type: "float", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderID);
+                    table.ForeignKey(
+                        name: "FK_Orders_Agents_AgentID",
+                        column: x => x.AgentID,
+                        principalTable: "Agents",
+                        principalColumn: "AgentID");
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerID",
                         column: x => x.CustomerID,
@@ -182,7 +188,7 @@ namespace OnlineFoodDeliverySystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: true),
                     AgentID = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstimatedTimeOfArrival = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -210,8 +216,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: true),
                     ItemID = table.Column<int>(type: "int", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,9 +243,9 @@ namespace OnlineFoodDeliverySystem.Migrations
                     PaymentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: true),
-                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    amount = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -280,9 +286,9 @@ namespace OnlineFoodDeliverySystem.Migrations
                 filter: "[OrderID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuItems_RestaruntID",
+                name: "IX_MenuItems_RestaurantID",
                 table: "MenuItems",
-                column: "RestaruntID");
+                column: "RestaurantID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_ItemID",
@@ -293,6 +299,11 @@ namespace OnlineFoodDeliverySystem.Migrations
                 name: "IX_OrderItems_OrderID",
                 table: "OrderItems",
                 column: "OrderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_AgentID",
+                table: "Orders",
+                column: "AgentID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerID",
@@ -336,13 +347,13 @@ namespace OnlineFoodDeliverySystem.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Agents");
-
-            migrationBuilder.DropTable(
                 name: "MenuItems");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Agents");
 
             migrationBuilder.DropTable(
                 name: "Customers");
