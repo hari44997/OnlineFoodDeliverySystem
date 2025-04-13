@@ -26,7 +26,7 @@ namespace OnlineFoodDeliverySystem.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(token);
+            return Ok(new { token });
         }
     }
 }

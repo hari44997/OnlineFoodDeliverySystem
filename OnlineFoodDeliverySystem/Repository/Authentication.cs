@@ -20,7 +20,7 @@ namespace OnlineFoodDeliverySystem.Repository
 
         public string Authenticate(string email, string password)
         {
-            var user = _context.Users.FirstOrDefault(u => u.EmailAddress == email && u.Password == password);
+            var user = _context.Users.Where(u => u.EmailAddress == email && u.Password == password).FirstOrDefault();
 
             if (user == null)
             {

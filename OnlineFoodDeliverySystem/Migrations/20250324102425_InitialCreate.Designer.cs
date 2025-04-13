@@ -12,8 +12,8 @@ using OnlineFoodDeliverySystem.Data;
 namespace OnlineFoodDeliverySystem.Migrations
 {
     [DbContext(typeof(FoodDbContext))]
-    [Migration("20250324094627_IntialCreate")]
-    partial class IntialCreate
+    [Migration("20250324102425_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

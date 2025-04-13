@@ -8,8 +8,19 @@ using OnlineFoodDeliverySystem.Repository;
 using OnlineFoodDeliverySystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyHeader();
+                          policy.AllowAnyMethod();
+                          policy.AllowAnyOrigin();
+                      });
+});
 builder.Services.AddControllers();
 builder.Services.AddDbContext<FoodDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddEndpointsApiExplorer();
@@ -101,4 +112,5 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.MapControllers();
 app.UseAuthorization();
+app.UseCors(MyAllowSpecificOrigins);
 app.Run();

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace OnlineFoodDeliverySystem.Models
 {
@@ -8,6 +9,7 @@ namespace OnlineFoodDeliverySystem.Models
         public int OrderItemID { get; set; }
 
         public int? OrderID { get; set; }
+        //public string? Name { get; set; }
 
         public int? ItemID { get; set; }
 
@@ -21,7 +23,9 @@ namespace OnlineFoodDeliverySystem.Models
         public decimal? Price { get; set; }
 
         // Navigation Properties
+        [JsonIgnore]
         public Order? Order { get; set; }
+        [JsonIgnore]
         public MenuItem? MenuItem { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         {
             _restaurantService = restaurantService;
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Customer")]
         [HttpGet]
         public IActionResult GetAllRestaurants()
         {
