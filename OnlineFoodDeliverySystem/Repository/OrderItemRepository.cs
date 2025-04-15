@@ -39,6 +39,12 @@ namespace OnlineFoodDeliverySystem.Repository
             return await _context.OrderItems.FindAsync(id);
         }
 
+        public async Task<IEnumerable<OrderItem>> GetOrderItemsByCustomerIdAsync(int customerId) // New method
+        {
+            return await _context.OrderItems.Where(o => o.CustomerID == customerId).ToListAsync();
+        }
+
+
         public async Task UpdateOrderItemAsync(int id, OrderItem orderItem)
         {
             var orderItemToUpdate = await _context.OrderItems.FindAsync(id);

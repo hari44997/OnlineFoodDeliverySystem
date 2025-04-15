@@ -161,6 +161,9 @@ namespace OnlineFoodDeliverySystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemID"));
 
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -178,6 +181,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ItemID");
+
+                    b.HasIndex("CustomerID");
 
                     b.HasIndex("RestaurantID");
 
@@ -232,8 +237,14 @@ namespace OnlineFoodDeliverySystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemID"));
 
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ItemID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("OrderID")
                         .HasColumnType("int");
@@ -247,6 +258,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderItemID");
+
+                    b.HasIndex("CustomerID");
 
                     b.HasIndex("ItemID");
 
@@ -398,10 +411,18 @@ namespace OnlineFoodDeliverySystem.Migrations
 
             modelBuilder.Entity("OnlineFoodDeliverySystem.Models.MenuItem", b =>
                 {
+                    b.HasOne("OnlineFoodDeliverySystem.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OnlineFoodDeliverySystem.Models.Restaurant", "Restaurant")
                         .WithMany("MenuItems")
                         .HasForeignKey("RestaurantID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Customer");
 
                     b.Navigation("Restaurant");
                 });
@@ -431,6 +452,12 @@ namespace OnlineFoodDeliverySystem.Migrations
 
             modelBuilder.Entity("OnlineFoodDeliverySystem.Models.OrderItem", b =>
                 {
+                    b.HasOne("OnlineFoodDeliverySystem.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("OnlineFoodDeliverySystem.Models.MenuItem", "MenuItem")
                         .WithMany("OrderItems")
                         .HasForeignKey("ItemID")
@@ -439,7 +466,9 @@ namespace OnlineFoodDeliverySystem.Migrations
                     b.HasOne("OnlineFoodDeliverySystem.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Customer");
 
                     b.Navigation("MenuItem");
 

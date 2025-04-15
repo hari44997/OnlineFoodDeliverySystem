@@ -17,11 +17,11 @@ namespace OnlineFoodDeliverySystem.Controllers
             _orderItemService = orderItemService;
         }
 
-        [HttpGet]
+        [HttpGet("customer/{CustomerID}")]
         [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> GetAllOrderItems()
+        public async Task<IActionResult> GetAllOrderItems(int CustomerID)
         {
-            var orderitems = await _orderItemService.GetAllOrderItemsAsync();
+            var orderitems = await _orderItemService.GetOrderItemsByCustomerIdAsync(CustomerID);
             return Ok(orderitems);
         }
 
@@ -41,7 +41,7 @@ namespace OnlineFoodDeliverySystem.Controllers
         public async Task<IActionResult> AddOrderItem([FromBody] OrderItem orderitem)
         {
             await _orderItemService.AddOrderItemAsync(orderitem);
-            return CreatedAtAction(nameof(GetOrderItemById), new { id = orderitem.OrderItemID }, orderitem);
+            return CreatedAtAction(nameof(GetOrderItemById), new { id = orderitem.ItemID}, orderitem);
         }
 
         [HttpPut("{id}")]

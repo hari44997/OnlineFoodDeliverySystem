@@ -8,6 +8,7 @@ namespace OnlineFoodDeliverySystem.Models
     {
         [Key]
         public int ItemID { get; set; }
+        public int CustomerID{ get; set; }
 
         [Required]
         [StringLength(100)]
@@ -26,6 +27,7 @@ namespace OnlineFoodDeliverySystem.Models
 
         // Navigation Properties
         public Restaurant? Restaurant { get; set; }
+        public Customer? Customer { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }
     }
 }

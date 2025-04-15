@@ -1,4 +1,5 @@
-﻿using OnlineFoodDeliverySystem.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineFoodDeliverySystem.Exceptions;
 using OnlineFoodDeliverySystem.Models;
 using OnlineFoodDeliverySystem.Repository;
 
@@ -33,6 +34,14 @@ namespace OnlineFoodDeliverySystem.Services
             var orderitems = await _orderItemRepository.GetAllOrderItemsAsync();
             return orderitems.ToList();
         }
+
+
+        public async Task<IEnumerable<OrderItem>> GetOrderItemsByCustomerIdAsync(int customerId)
+        {
+            return await _orderItemRepository.GetOrderItemsByCustomerIdAsync(customerId);
+        }
+
+
 
         public async Task<OrderItem> GetOrderItemByIdAsync(int id)
         {

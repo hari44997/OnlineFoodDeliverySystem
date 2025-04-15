@@ -39,28 +39,6 @@ namespace OnlineFoodDeliverySystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuItems",
-                columns: table => new
-                {
-                    ItemID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RestaurantID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuItems", x => x.ItemID);
-                    table.ForeignKey(
-                        name: "FK_MenuItems_Restaurants_RestaurantID",
-                        column: x => x.RestaurantID,
-                        principalTable: "Restaurants",
-                        principalColumn: "RestaurantID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Admins",
                 columns: table => new
                 {
@@ -146,6 +124,35 @@ namespace OnlineFoodDeliverySystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MenuItems",
+                columns: table => new
+                {
+                    ItemID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CustomerID = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RestaurantID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.ItemID);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_Restaurants_RestaurantID",
+                        column: x => x.RestaurantID,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -215,6 +222,8 @@ namespace OnlineFoodDeliverySystem.Migrations
                     OrderItemID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerID = table.Column<int>(type: "int", nullable: false),
                     ItemID = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
@@ -222,6 +231,12 @@ namespace OnlineFoodDeliverySystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.OrderItemID);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_MenuItems_ItemID",
                         column: x => x.ItemID,
@@ -233,7 +248,7 @@ namespace OnlineFoodDeliverySystem.Migrations
                         column: x => x.OrderID,
                         principalTable: "Orders",
                         principalColumn: "OrderID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,9 +301,19 @@ namespace OnlineFoodDeliverySystem.Migrations
                 filter: "[OrderID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_CustomerID",
+                table: "MenuItems",
+                column: "CustomerID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MenuItems_RestaurantID",
                 table: "MenuItems",
                 column: "RestaurantID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_CustomerID",
+                table: "OrderItems",
+                column: "CustomerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_ItemID",

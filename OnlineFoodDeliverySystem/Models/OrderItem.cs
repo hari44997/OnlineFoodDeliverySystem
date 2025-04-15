@@ -9,7 +9,8 @@ namespace OnlineFoodDeliverySystem.Models
         public int OrderItemID { get; set; }
 
         public int? OrderID { get; set; }
-        //public string? Name { get; set; }
+        public string? Name { get; set; }
+        public int CustomerID { get; set; }
 
         public int? ItemID { get; set; }
 
@@ -25,6 +26,8 @@ namespace OnlineFoodDeliverySystem.Models
         // Navigation Properties
         [JsonIgnore]
         public Order? Order { get; set; }
+        [JsonIgnore]
+        public Customer? Customer { get; set; }
         [JsonIgnore]
         public MenuItem? MenuItem { get; set; }
     }
