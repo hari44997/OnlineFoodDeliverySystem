@@ -18,6 +18,10 @@ namespace OnlineFoodDeliverySystem.Repository
             await _context.OrderItems.AddAsync(orderItem);
             await _context.SaveChangesAsync();
         }
+        public async Task<OrderItem> GetOrderItemByCustomerAndItemAsync(int customerId, int itemId)
+        {
+            return await _context.OrderItems.FirstOrDefaultAsync(o => o.CustomerID == customerId && o.ItemID == itemId);
+        }
 
         public async Task DeleteOrderItemAsync(int id)
         {

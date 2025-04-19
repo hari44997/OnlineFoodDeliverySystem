@@ -16,7 +16,19 @@ namespace OnlineFoodDeliverySystem.Services
 
         public async Task AddOrderItemAsync(OrderItem orderitem)
         {
-            await _orderItemRepository.AddOrderItemAsync(orderitem);
+            // 1. Check if an item with the same CustomerID and ItemID already exists
+            var existingOrderItem = await _orderItemRepository.GetOrderItemByCustomerAndItemAsync(orderitem.CustomerID, orderitem.ItemID.Value);
+
+            if (existingOrderItem != null)
+            {
+                // 2. If it exists, update the quantity
+                existingOrderItem.Quantity += orderitem.Quantity; // Add the new quantity to the existing
+                await _orderItemRepository.UpdateOrderItemAsync(existingOrderItem.OrderItemID, existingOrderItem);
+            }
+            else
+            {
+                await _orderItemRepository.AddOrderItemAsync(orderitem);
+            }
         }
 
         public async Task DeleteOrderItemAsync(int id)
